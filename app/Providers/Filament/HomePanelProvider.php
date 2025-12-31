@@ -27,7 +27,7 @@ class HomePanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('home')
-            ->path('home')
+            ->path('/')
             ->login()
             ->colors([
                 'primary' => Color::Neutral,
