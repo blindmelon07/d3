@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Filament\Resources\Contributions\Schemas;
+
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
+
+class ContributionForm
+{
+    public static function configure(Schema $schema): Schema
+    {
+        $user = auth()->user();
+        $canEditStatus = $user && ($user->hasRole(['super_admin', 'treasurer', 'district_treasurer']));
+        $isAdmin = $user && $user->hasRole('super_admin');
+
+        return $schema
+            ->components([
+                Select::make('member_id')
+                    ->relationship('member', 'full_name', function ($query) use ($user, $isAdmin) {
+                        // Non-admins can only select their own member profile
+                        if (!$isAdmin) {
+                            $query->where('user_id', $user->id);
+                        }
+                    })
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->label('Member')
+                    ->default(function () use ($user, $isAdmin) {
+                        // Auto-select the logged-in user's member for non-admins
+                        if (!$isAdmin && $user) {
+                            return $user->member?->id;
+                        }
+                        return null;
+                    })
+                    ->disabled(fn () => !$isAdmin && $user && $user->member)
+                    ->dehydrated()
+                    ->columnSpanFull(),
+
+                TextInput::make('amount')
+                    ->numeric()
+                    ->prefix('₱')
+                    ->minValue(0)
+                    ->step(0.01)
+                    ->required()
+                    ->default(100.00)
+                    ->label('Amount'),
+
+                Select::make('contribution_type')
+                    ->options([
+                        'monthly_dues' => 'Monthly Dues',
+                        'special_assessment' => 'Special Assessment',
+                        'donation' => 'Donation',
+                        'penalty' => 'Penalty',
+                        'other' => 'Other',
+                    ])
+                    ->default('monthly_dues')
+                    ->required()
+                    ->label('Contribution Type'),
+
+                DatePicker::make('contribution_date')
+                    ->required()
+                    ->default(now())
+                    ->maxDate(now())
+                    ->label('Date'),
+
+                Select::make('status')
+                    ->options([
+                        'paid' => 'Paid',
+                        'pending' => 'Pending',
+                        'overdue' => 'Overdue',
+                    ])
+                    ->default('pending')
+                    ->required()
+                    ->label('Status')
+                    ->visible(fn () => $canEditStatus)
+                    ->disabled(fn () => !$canEditStatus),
+
+                Select::make('payment_method')
+                    ->options([
+                        'cash' => 'Cash',
+                        'bank_transfer' => 'Bank Transfer',
+                        'gcash' => 'GCash',
+                        'paymaya' => 'PayMaya',
+                        'check' => 'Check',
+                        'other' => 'Other',
+                    ])
+                    ->label('Payment Method')
+                    ->nullable(),
+
+                TextInput::make('reference_number')
+                    ->maxLength(255)
+                    ->label('Reference Number')
+                    ->placeholder('Transaction/Check number')
+                    ->nullable(),
+
+                Textarea::make('remarks')
+                    ->maxLength(65535)
+                    ->columnSpanFull()
+                    ->label('Remarks')
+                    ->nullable(),
+            ]);
+    }
+}
