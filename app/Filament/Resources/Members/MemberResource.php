@@ -20,6 +20,18 @@ class MemberResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::UserGroup;
 
+    public static function getNavigationLabel(): string
+    {
+        $user = auth()->user();
+
+        // Show "My Profile" for member role
+        if ($user && $user->hasRole('member')) {
+            return 'My Profile';
+        }
+
+        return 'Members';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return MemberForm::configure($schema);
@@ -28,6 +40,19 @@ class MemberResource extends Resource
     public static function table(Table $table): Table
     {
         return MembersTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        // If user has member role, only show their own member profile
+        if ($user && $user->hasRole('member')) {
+            $query->where('user_id', $user->id);
+        }
+
+        return $query;
     }
 
     public static function getRelations(): array
