@@ -3,6 +3,7 @@
 namespace App\Filament;
 
 use App\Models\Contribution;
+use App\Models\Meeting;
 use App\Models\Member;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -29,6 +30,10 @@ class StatsOverview extends BaseWidget
                 ->description('Contributions awaiting payment')
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('danger'),
+            Stat::make('Total Meetings', Meeting::count())
+                ->description('Total meetings recorded')
+                ->descriptionIcon('heroicon-m-calendar-days')
+                ->color('primary'),
         ];
     }
 }
