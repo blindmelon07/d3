@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Guava\Calendar\Contracts\Eventable;
+use Guava\Calendar\ValueObjects\CalendarEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Meeting extends Model
+class Meeting extends Model implements Eventable
 {
     use HasFactory;
 
@@ -20,4 +22,13 @@ class Meeting extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function toCalendarEvent(): CalendarEvent
+    {
+        return CalendarEvent::make($this)
+            ->title($this->name)
+            ->start($this->meeting_date)
+            ->end($this->meeting_date->copy()->addDay())
+            ->allDay();
+    }
 }

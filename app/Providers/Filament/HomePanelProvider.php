@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\Events;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -26,6 +27,7 @@ class HomePanelProvider extends PanelProvider
             ->default()
             ->id('home')
             ->path('/')
+            ->viteTheme('resources/css/filament/home/theme.css')
             ->login()
             ->colors([
                 'primary' => Color::Neutral,
@@ -40,6 +42,7 @@ class HomePanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 \App\Filament\StatsOverview::class,
+                Events::class,
             ])
             ->middleware([
                 EncryptCookies::class,

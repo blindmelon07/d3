@@ -28,7 +28,7 @@ class MeetingsTable
                     ->limit(50)
                     ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
-                        if (strlen($state) <= $column->getLimit()) {
+                        if (strlen($state) <= 50) {
                             return null;
                         }
 
