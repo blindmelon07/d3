@@ -26,7 +26,7 @@ class HomePanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('home')
-            ->path('/')
+            ->path('home')
             ->viteTheme('resources/css/filament/home/theme.css')
             ->login()
             ->colors([
