@@ -38,12 +38,12 @@ class EventsTable
                     ->placeholder('No description'),
 
                 TextColumn::make('start_date')
-                    ->dateTime('M j, Y g:i A')
+                    ->date('M j, Y')
                     ->sortable()
                     ->label('Start Date'),
 
                 TextColumn::make('end_date')
-                    ->dateTime('M j, Y g:i A')
+                    ->date('M j, Y')
                     ->sortable()
                     ->label('End Date')
                     ->placeholder('Auto-calculated'),

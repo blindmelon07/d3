@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\Events\Schemas;
 
 use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -27,14 +29,14 @@ class EventForm
                     ->columnSpanFull()
                     ->rows(3),
 
-                DateTimePicker::make('start_date')
+                DatePicker::make('start_date')
                     ->required()
-                    ->label('Start Date & Time')
-                    ->placeholder('Select start date and time'),
+                    ->label('Start Date')
+                    ->placeholder('Select start date'),
 
-                DateTimePicker::make('end_date')
-                    ->label('End Date & Time')
-                    ->placeholder('Select end date and time (optional)')
+                DatePicker::make('end_date')
+                    ->label('End Date')
+                    ->placeholder('Select end date (optional)')
                     ->after('start_date'),
 
                 Toggle::make('all_day')
@@ -51,6 +53,16 @@ class EventForm
                     ->label('Event Color')
                     ->placeholder('Choose event color (optional)')
                     ->default('#3b82f6'),
+
+                FileUpload::make('image_path')
+                    ->label('Event Image')
+                    ->image()
+                    ->disk('public') // Use public disk
+                    ->directory('events')
+                    ->placeholder('Upload an event image (optional)')
+                    ->columnSpanFull()
+                    ->acceptedFileTypes(['image/*']) // Restrict to image files only
+                    ->maxSize(6144), // Optional: Limit file size to 6MB
             ]);
     }
 }

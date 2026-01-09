@@ -16,6 +16,7 @@ class Event extends Model implements Eventable
         'all_day',
         'location',
         'color',
+        'image_path', // Added image path
     ];
 
     protected $casts = [
