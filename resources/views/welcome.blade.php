@@ -224,8 +224,61 @@
             </div>
         </section>
 
+        <!-- Business Advertisements Section -->
+        <section id="advertisements" class="bg-[#f5f3f0] py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-serif font-bold text-[#1a3a52] mb-2">Our Business Partners</h2>
+                <p class="text-[#666666] text-lg mb-12">Supporting businesses from our community</p>
+
+                @if(isset($advertisements) && $advertisements->count() > 0)
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        @foreach($advertisements as $ad)
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            @if($ad->image_path)
+                                <div class="h-48 bg-gray-100 flex items-center justify-center overflow-hidden">
+                                    <img src="{{ asset('storage/' . $ad->image_path) }}"
+                                         alt="{{ $ad->name }}"
+                                         class="w-full h-full object-contain p-4">
+                                </div>
+                            @else
+                                <div class="h-48 bg-gradient-to-br from-[#1a3a52] to-[#2c5282] flex items-center justify-center">
+                                    <span class="text-white text-4xl font-serif font-bold">{{ substr($ad->name, 0, 1) }}</span>
+                                </div>
+                            @endif
+                            <div class="p-6">
+                                <h3 class="text-xl font-serif font-bold text-[#1a3a52] mb-3">{{ $ad->name }}</h3>
+
+                                @if($ad->address)
+                                <div class="flex items-start gap-2 text-[#666666] mb-2">
+                                    <span class="text-lg">📍</span>
+                                    <p class="text-sm">{{ $ad->address }}</p>
+                                </div>
+                                @endif
+
+                                @if($ad->website_url)
+                                <div class="mt-4">
+                                    <a href="{{ $ad->website_url }}"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="inline-flex items-center gap-2 text-[#2c5282] hover:text-[#1a3a52] font-semibold text-sm">
+                                        🌐 Visit Website →
+                                    </a>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="bg-white rounded-lg p-16 shadow-sm border border-gray-200 text-center">
+                        <p class="text-[#666666] text-lg">No business advertisements at this time.</p>
+                    </div>
+                @endif
+            </div>
+        </section>
+
         <!-- About section with core values -->
-        <section id="about" class="bg-[#f5f3f0] py-20">
+        <section id="about" class="bg-white py-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-4xl font-serif font-bold text-[#1a3a52] mb-2">About TFOE(PE) District 3</h2>
                 <div class="w-12 h-1 bg-[#2c5282] mb-12"></div>
@@ -254,6 +307,41 @@
                         TFOE(PE) District 3 is committed to advancing the values of brotherhood, service, and excellence. We believe in the power of unified action and the importance of developing leaders who are dedicated to making a meaningful difference in their communities and beyond.
                     </p>
                 </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section id="gallery" class="bg-[#f5f3f0] py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-serif font-bold text-[#1a3a52] mb-2">Photo Gallery</h2>
+                <p class="text-[#666666] text-lg mb-12">Capturing moments of brotherhood and service</p>
+
+                @if(isset($galleries) && $galleries->count() > 0)
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        @foreach($galleries as $photo)
+                        <div class="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer"
+                             onclick="openGalleryModal('{{ asset('storage/' . $photo->image_path) }}', '{{ $photo->title }}', '{{ $photo->description }}')">
+                            <div class="aspect-square overflow-hidden">
+                                <img src="{{ asset('storage/' . $photo->image_path) }}"
+                                     alt="{{ $photo->title }}"
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-4">
+                                    <h3 class="text-white font-semibold text-sm truncate">{{ $photo->title }}</h3>
+                                    @if($photo->description)
+                                    <p class="text-white/80 text-xs truncate mt-1">{{ $photo->description }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="bg-white rounded-lg p-16 shadow-sm border border-gray-200 text-center">
+                        <p class="text-[#666666] text-lg">No photos in the gallery yet. Check back soon!</p>
+                    </div>
+                @endif
             </div>
         </section>
 
@@ -318,6 +406,22 @@
             </div>
         </div>
 
+        <!-- Gallery Modal -->
+        <div id="galleryModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4" onclick="closeGalleryModal()">
+            <div class="relative max-w-5xl max-h-full" onclick="event.stopPropagation()">
+                <button onclick="closeGalleryModal()" class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <img id="galleryModalImage" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg">
+                <div class="text-center mt-4">
+                    <h3 id="galleryModalTitle" class="text-white text-xl font-serif font-semibold"></h3>
+                    <p id="galleryModalDescription" class="text-white/70 text-sm mt-2"></p>
+                </div>
+            </div>
+        </div>
+
         <script>
             function openImageModal(imageSrc, imageAlt) {
                 const modal = document.getElementById('imageModal');
@@ -338,10 +442,32 @@
                 document.body.style.overflow = 'auto';
             }
 
-            // Close modal on Escape key
+            function openGalleryModal(imageSrc, title, description) {
+                const modal = document.getElementById('galleryModal');
+                const modalImage = document.getElementById('galleryModalImage');
+                const modalTitle = document.getElementById('galleryModalTitle');
+                const modalDescription = document.getElementById('galleryModalDescription');
+
+                modalImage.src = imageSrc;
+                modalImage.alt = title;
+                modalTitle.textContent = title;
+                modalDescription.textContent = description || '';
+
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeGalleryModal() {
+                const modal = document.getElementById('galleryModal');
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Close modals on Escape key
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape') {
                     closeImageModal();
+                    closeGalleryModal();
                 }
             });
         </script>

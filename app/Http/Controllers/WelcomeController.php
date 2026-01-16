@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
 use App\Models\Event;
+use App\Models\Gallery;
 
 class WelcomeController extends Controller
 {
@@ -13,6 +15,14 @@ class WelcomeController extends Controller
             ->limit(6)
             ->get();
 
-        return view('welcome', compact('upcomingEvents'));
+        $advertisements = Advertisement::where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $galleries = Gallery::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        return view('welcome', compact('upcomingEvents', 'advertisements', 'galleries'));
     }
 }
