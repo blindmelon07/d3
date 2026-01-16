@@ -80,12 +80,16 @@
                 <!-- Affiliated logos section with larger sizing -->
                 <div class="mt-20 pt-12 border-t border-white/20">
                     <h2 class="text-lg font-semibold uppercase tracking-widest text-white/70 mb-8">Our Affiliated Organizations</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center">
-                        <img src="/images/seec.png" alt="Official Logo" class="h-32 w-auto rounded" />
-                        <img src="/images/segec.png" alt="District Logo" class="h-32 w-auto rounded" />
-                        <img src="/images/juban.png" alt="" class="h-32 w-auto rounded" />
-                        <img src="/images/gibalon.png" alt="Gibalon" class="h-32 w-auto rounded" />
-                        <img src="/images/msec.png" alt="MSEC" class="h-32 w-auto rounded" />
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-center">
+                        <img src="/images/seec.png" alt="Official Logo" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/segec.png" alt="District Logo" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/juban.png" alt="" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/gibalon.png" alt="Gibalon" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/msec.png" alt="MSEC" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/sec.png" alt="SEC" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/bulan.png" alt="Bulan" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/smec.png" alt="SMEC" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        
                     </div>
                 </div>
             </div>
