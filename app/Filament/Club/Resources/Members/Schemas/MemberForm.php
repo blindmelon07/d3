@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Members\Schemas;
+namespace App\Filament\Club\Resources\Members\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -54,7 +54,6 @@ class MemberForm
                     ->options([
                         'Paid' => 'Paid',
                         'Not Paid' => 'Not Paid',
-
                     ])
                     ->default('None')
                     ->columnSpanFull(),

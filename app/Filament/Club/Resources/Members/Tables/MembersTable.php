@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Members\Tables;
+namespace App\Filament\Club\Resources\Members\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -14,16 +14,6 @@ class MembersTable
 {
     public static function configure(Table $table): Table
     {
-        $user = auth()->user();
-        $recordActions = [];
-
-        // Only show edit action for admins
-        if ($user && ! $user->hasRole('member')) {
-            $recordActions = [
-                EditAction::make(),
-            ];
-        }
-
         return $table
             ->columns([
                 ImageColumn::make('profile_picture')
@@ -34,7 +24,6 @@ class MembersTable
                     ->searchable(),
                 TextColumn::make('position')
                     ->searchable(),
-
                 TextColumn::make('club.name')
                     ->label('Club')
                     ->searchable()
@@ -57,8 +46,16 @@ class MembersTable
                 SelectFilter::make('club_id')
                     ->label('Club')
                     ->relationship('club', 'name'),
+                SelectFilter::make('status')
+                    ->options([
+                        'Active' => 'Active',
+                        'Inactive' => 'Inactive',
+                        'Suspended' => 'Suspended',
+                    ]),
             ])
-            ->recordActions($recordActions)
+            ->recordActions([
+                EditAction::make(),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

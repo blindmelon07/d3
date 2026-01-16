@@ -13,6 +13,7 @@ class Member extends Model
 
     protected $fillable = [
         'user_id',
+        'club_id',
         'id_number',
         'profile_picture',
         'full_name',
@@ -31,6 +32,11 @@ class Member extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function club(): BelongsTo
+    {
+        return $this->belongsTo(Club::class);
     }
 
     public function contributions(): HasMany
