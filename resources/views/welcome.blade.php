@@ -84,7 +84,7 @@
                         <img src="/images/seec.png" alt="Official Logo" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
                         <img src="/images/segec.png" alt="District Logo" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
                         <img src="/images/juban.png" alt="" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
-                        <img src="/images/gibalon.png" alt="Gibalon" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
+                        <img src="/images/gibalon.png?v=2" alt="Gibalon" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
                         <img src="/images/msec.png" alt="MSEC" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
                         <img src="/images/sec.png" alt="SEC" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
                         <img src="/images/bulan.png" alt="Bulan" class="rounded" style="width: 577px; height: 433px; object-fit: contain;" />
